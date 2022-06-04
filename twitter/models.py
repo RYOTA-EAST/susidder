@@ -10,6 +10,7 @@ class Tweet(models.Model):
   is_deleted = models.BooleanField(default=False, verbose_name='削除フラグ')
   created_at = models.DateTimeField(auto_now_add=True, verbose_name='作成日時')
   updated_at = models.DateTimeField(auto_now_add=True, verbose_name='更新日時')
+  tweeted_at = models.DateTimeField(null=True, verbose_name='ツイート予定日時')
 
   def __str__(self):
     return self.text

@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 
 from .models import Tweet
-from .forms import TweetFrom
+from .forms import TweetForm
 
 class IndexView(ListView):
 
@@ -17,11 +17,12 @@ class FormViewBase(FormView):
   model = Tweet
   template_name = 'twitter/form.html'
   success_url = reverse_lazy('twitter:index')
+  form_class = TweetForm
   message = ''
 
   def form_valid(self, form):
     tweet = form.save(commit=False)
-    tweet.user_id = self.request.user.idx
+    tweet.user_id = self.request.user.id
     tweet.save()
     messages.success(self.request, '成功しました')
 
