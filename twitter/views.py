@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView, FormView, CreateView, UpdateView, View
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -36,3 +37,17 @@ class TweetUpdateView(FormViewBase, UpdateView):
   message = '予約ツイート内容を変更しました'
 
 update = TweetUpdateView.as_view()
+
+class TweetDeleteView(View):
+  success_url = reverse_lazy('twitter:index')
+  message = '予約ツイートを削除しました'
+
+  def get(self, request, *args, **kwargs):
+    tweet_id = kwargs.get('pk')
+    tweet = Tweet.objects.get(id=tweet_id)
+    tweet.is_deleted = True
+    tweet.save()
+    messages.success(self.request, self.message)
+    return HttpResponseRedirect(self.success_url)
+
+delete = TweetDeleteView.as_view()
