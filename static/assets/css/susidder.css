@@ -1,7 +1,7 @@
 .masthead{
   position: relative;
   background-color: #343a40;
-  background: url("../img/top.jpg") noreapeat center center;
+  background: url("../img/top.jpg") no-repeat center center;
   background-size: cover;
   padding-top: 8rem;
   padding-bottom: 8rem;
