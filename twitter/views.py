@@ -24,7 +24,8 @@ class FormViewBase(FormView):
     tweet = form.save(commit=False)
     tweet.user_id = self.request.user.id
     tweet.save()
-    messages.success(self.request, '成功しました')
+    messages.success(self.request, self.message)
+    return super().form_valid(form)
 
 class TweetCreateView(FormViewBase):
   message = 'ツイートを予約しました'
