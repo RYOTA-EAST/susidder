@@ -1,12 +1,13 @@
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, FormView, CreateView, UpdateView, View
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
 from .models import Tweet
 from .forms import TweetForm
 
-class IndexView(ListView):
+class IndexView(LoginRequiredMixin, ListView):
 
   template_name = 'twitter/index.html'
   context_object_name = 'tweets'
@@ -14,7 +15,7 @@ class IndexView(ListView):
 
 index = IndexView.as_view()
 
-class FormViewBase(FormView):
+class FormViewBase(LoginRequiredMixin, FormView):
   model = Tweet
   template_name = 'twitter/form.html'
   success_url = reverse_lazy('twitter:index')
@@ -38,7 +39,7 @@ class TweetUpdateView(FormViewBase, UpdateView):
 
 update = TweetUpdateView.as_view()
 
-class TweetDeleteView(View):
+class TweetDeleteView(LoginRequiredMixin, View):
   success_url = reverse_lazy('twitter:index')
   message = '予約ツイートを削除しました'
 
